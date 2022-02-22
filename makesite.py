@@ -119,7 +119,8 @@ def read_content(filename):
 def render(template, **params):
     """Replace placeholders in template with values from params."""
     return re.sub(r'{{\s*([^}\s]+)\s*}}',
-                  lambda match: str(params.get(match.group(1), match.group(0))),
+                  lambda match: str(params.get(
+                      match.group(1), match.group(0))),
                   template)
 
 
@@ -207,21 +208,21 @@ def main():
     blog_posts = make_pages('content/blog/*.md',
                             '_site/blog/{{ slug }}/index.html',
                             post_layout, blog='blog', **params)
-    news_posts = make_pages('content/news/*.html',
-                            '_site/news/{{ slug }}/index.html',
-                            post_layout, blog='news', **params)
+    projects_posts = make_pages('content/projects/*.html',
+                                '_site/projects/{{ slug }}/index.html',
+                                post_layout, blog='projects', **params)
 
     # Create blog list pages.
     make_list(blog_posts, '_site/blog/index.html',
               list_layout, item_layout, blog='blog', title='Blog', **params)
-    make_list(news_posts, '_site/news/index.html',
-              list_layout, item_layout, blog='news', title='News', **params)
+    make_list(projects_posts, '_site/projects/index.html',
+              list_layout, item_layout, blog='projects', title='Projects', **params)
 
     # Create RSS feeds.
     make_list(blog_posts, '_site/blog/rss.xml',
               feed_xml, item_xml, blog='blog', title='Blog', **params)
-    make_list(news_posts, '_site/news/rss.xml',
-              feed_xml, item_xml, blog='news', title='News', **params)
+    make_list(projects_posts, '_site/projects/rss.xml',
+              feed_xml, item_xml, blog='projects', title='projects', **params)
 
 
 # Test parameter to be set temporarily by unit tests.
